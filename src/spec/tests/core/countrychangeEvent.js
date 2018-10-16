@@ -6,18 +6,19 @@ describe("countrychange event:", function() {
 
   beforeEach(function() {
     intlSetup();
-    input = $("<input>").wrap("div");
+    input = $("<input>");
     spy = spyOnEvent(input, 'countrychange');
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   describe("init plugin", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0])
+      input.intlTelInput();
     });
 
     it("does not trigger the event", function() {
@@ -25,12 +26,12 @@ describe("countrychange event:", function() {
     });
 
     it("calling setCountry triggers the event", function() {
-      iti.setCountry("fr");
+      input.intlTelInput("setCountry", "fr");
       expect(spy).toHaveBeenTriggered();
     });
 
     it("calling setNumber triggers the event", function() {
-      iti.setNumber("+34");
+      input.intlTelInput("setNumber", "+34");
       expect(spy).toHaveBeenTriggered();
     });
 
@@ -43,6 +44,17 @@ describe("countrychange event:", function() {
       input.val("+4");
       triggerKeyOnInput("4"); // selects uk
       expect(spy).toHaveBeenTriggered();
+    });
+
+    it("returns the selected country as extraParameter", function() {
+      selectFlag("fr");
+      expect('countrychange').toHaveBeenTriggeredOnAndWith(input, {
+        name: 'France',
+        iso2: 'fr',
+        dialCode: '33',
+        priority: 0,
+        areaCodes: null
+      });
     });
   });
 

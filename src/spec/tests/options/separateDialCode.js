@@ -4,11 +4,12 @@ describe("separateDialCode:", function() {
 
   beforeEach(function() {
     intlSetup(true);
-    input = $("<input>").wrap("div");
+    input = $("<input>");
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
 
@@ -17,9 +18,9 @@ describe("separateDialCode:", function() {
   describe("init plugin with initialCountry=gb", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         separateDialCode: true,
-        initialCountry: "gb",
+        initialCountry: "gb"
       });
     });
 
@@ -40,7 +41,7 @@ describe("separateDialCode:", function() {
     describe("calling setNumber to a valid intl number", function() {
 
       beforeEach(function() {
-        iti.setNumber("+447400123456");
+        input.intlTelInput("setNumber", "+447400123456");
       });
 
       it("formats the number correctly", function() {
@@ -49,7 +50,7 @@ describe("separateDialCode:", function() {
       });
 
       it("calling getNumber returns the full intl number", function() {
-        expect(iti.getNumber()).toEqual("+447400123456");
+        expect(input.intlTelInput("getNumber")).toEqual("+447400123456");
       });
 
     });
@@ -61,9 +62,9 @@ describe("separateDialCode:", function() {
   describe("init plugin with initialCountry=ca", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         separateDialCode: true,
-        initialCountry: "ca",
+        initialCountry: "ca"
       });
     });
 
@@ -73,7 +74,7 @@ describe("separateDialCode:", function() {
     });
 
     it("calling setNumber will set the number correctly", function() {
-      iti.setNumber("+15194971234");
+      input.intlTelInput("setNumber", "+15194971234");
       // used to be '497-1234'
       expect(getInputVal()).toEqual("519-497-1234");
     });
@@ -86,9 +87,9 @@ describe("separateDialCode:", function() {
   describe("init plugin with initialCountry=as", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         separateDialCode: true,
-        initialCountry: "as",
+        initialCountry: "as"
       });
     });
 
@@ -98,7 +99,7 @@ describe("separateDialCode:", function() {
     });
 
     it("calling setNumber will set the number correctly", function() {
-      iti.setNumber("+16847331234");
+      input.intlTelInput("setNumber", "+16847331234");
       // used to be '4-733-1234'
       expect(getInputVal()).toEqual("733-1234");
     });
@@ -112,9 +113,9 @@ describe("separateDialCode:", function() {
 
     beforeEach(function() {
       input.val("(922) 555-1234");
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         separateDialCode: true,
-        initialCountry: "ru",
+        initialCountry: "ru"
       });
     });
 

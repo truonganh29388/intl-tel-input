@@ -9,14 +9,15 @@ describe("dropdownContainer:", function() {
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy").remove();
+    input = null;
   });
 
-  describe("init plugin with dropdownContainer=null", function() {
+  describe("init plugin with dropdownContainer=''", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
-        dropdownContainer: null,
+      input.intlTelInput({
+        dropdownContainer: ""
       });
     });
 
@@ -43,16 +44,18 @@ describe("dropdownContainer:", function() {
 
   });
 
-  describe("init plugin with dropdownContainer=document.body", function() {
+  describe("init plugin with dropdownContainer='body'", function() {
+
+    var selector = "body";
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
-        dropdownContainer: document.body,
+      input.intlTelInput({
+        dropdownContainer: selector
       });
     });
 
-    it("doesnt immediately add the markup to the DOM", function() {
-      expect($(".iti-container")).not.toExist();
+    it("doesnt immediately add the markup to that element", function() {
+      expect($(selector+">.iti-container")).not.toExist();
     });
 
     describe("triggering the dropdown", function() {
@@ -62,17 +65,17 @@ describe("dropdownContainer:", function() {
       });
 
       it("adds the markup to that element and makes it visible in the document", function() {
-        expect($("body>.iti-container")).toBeVisible();
+        expect($(selector+">.iti-container")).toBeVisible();
       });
 
       it("selecting a country removes the markup again", function() {
-        $("body>.iti-container").find("li[data-country-code='gb']").click();
-        expect($("body>.iti-container")).not.toExist();
+        $(selector+">.iti-container").find("li[data-country-code='gb']").click();
+        expect($(selector+">.iti-container")).not.toExist();
       });
 
       it("clicking-off removes the markup again", function() {
         $("body").click();
-        expect($("body>.iti-container")).not.toExist();
+        expect($(selector+">.iti-container")).not.toExist();
       });
 
     });

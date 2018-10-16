@@ -2,23 +2,21 @@
 
 describe("initialCountry: ", function() {
 
-  beforeEach(function() {
-    intlSetup();
-  });
-
-  afterEach(function() {
-    intlTeardown();
-  });
-
   describe("init plugin with initialCountry set to Japan", function() {
 
     var initialCountry = "jp";
 
     beforeEach(function() {
-      input = $("<input>").wrap("div");
-      iti = window.intlTelInput(input[0], {
+      intlSetup();
+      input = $("<input>");
+      input.intlTelInput({
         initialCountry: initialCountry
       });
+    });
+
+    afterEach(function() {
+      input.intlTelInput("destroy");
+      input = null;
     });
 
     it("sets the selected flag correctly", function() {
@@ -38,10 +36,16 @@ describe("initialCountry: ", function() {
     var initialCountry = "ca";
 
     beforeEach(function() {
+      intlSetup();
       input = $("<input value='+1 800 123 1234'>");
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         initialCountry: initialCountry
       });
+    });
+
+    afterEach(function() {
+      input.intlTelInput("destroy");
+      input = null;
     });
 
     it("sets the state correctly: selected flag and active list item", function() {

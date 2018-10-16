@@ -2,24 +2,20 @@
 
 describe("using input: ", function() {
 
-  beforeEach(function() {
-    intlSetup();
-  });
-
-  afterEach(function() {
-    intlTeardown();
-  });
-
-
-
   describe("init plugin with nationalMode=false", function() {
 
     beforeEach(function() {
-      input = $("<input>").wrap("div");
+      intlSetup();
+      input = $("<input>");
       // nationalMode=false because we want to play with dial codes
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         nationalMode: false
       });
+    });
+
+    afterEach(function() {
+      input.intlTelInput("destroy");
+      input = null;
     });
 
 
@@ -95,8 +91,7 @@ describe("using input: ", function() {
     describe("typing a bangladesh intl dial code", function() {
 
       beforeEach(function() {
-        input.val("+880");
-        triggerKeyOnInput(" ");
+        input.val("+880").keyup();
       });
 
       it("selects the bangladesh flag", function() {
@@ -107,8 +102,7 @@ describe("using input: ", function() {
       describe("adding a 1 at the beginning", function() {
 
         beforeEach(function() {
-          input.val("+1880");
-          triggerKeyOnInput(" ");
+          input.val("+1880").keyup();
         });
 
         it("changes to US flag", function() {
@@ -127,8 +121,14 @@ describe("using input: ", function() {
   describe("init plugin", function() {
 
     beforeEach(function() {
-      input = $("<input>").wrap("div");
-      iti = window.intlTelInput(input[0]);
+      intlSetup();
+      input = $("<input>");
+      input.intlTelInput();
+    });
+
+    afterEach(function() {
+      input.intlTelInput("destroy");
+      input = null;
     });
 
     describe("selecting Canada and then typing a regionless number", function() {

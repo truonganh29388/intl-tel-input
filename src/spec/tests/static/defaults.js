@@ -2,27 +2,23 @@
 
 describe("defaults: change default plugin options", function() {
 
+	var defaults = $.extend({}, $.fn.intlTelInput.defaults);
+
 	beforeEach(function() {
 		intlSetup();
-		input = $("<input>").wrap("div");
+		input = $("<input>");
 	});
 
 	afterEach(function() {
-		intlTeardown();
+		input.intlTelInput("destroy");
+		input = null;
+		$.fn.intlTelInput.defaults = defaults;
 	});
 
-	describe('setting the default option initialCountry=ru and initialising the plugin', function() {
-		beforeEach(function() {
-			window.intlTelInputGlobals.defaults.initialCountry = "ru";
-			iti = window.intlTelInput(input[0]);
-		});
-
-		afterEach(function() {
-			window.intlTelInputGlobals.defaults.initialCountry = "";
-		});
-
-		it("displays the russian flag", function() {
-			expect(iti.getSelectedCountryData().iso2).toEqual("ru");
-		});
+	it("set default option initialCountry=ru", function() {
+		$.fn.intlTelInput.defaults.initialCountry = "ru";
+		input.intlTelInput();
+		expect(input.intlTelInput("getSelectedCountryData").iso2).toEqual("ru");
 	});
+
 });

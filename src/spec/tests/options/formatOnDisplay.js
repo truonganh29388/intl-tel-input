@@ -10,13 +10,14 @@ describe("formatOnDisplay: testing input containing valid US number", function()
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   describe("init plugin with formatOnDisplay=false", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         formatOnDisplay: false
       });
     });
@@ -27,7 +28,7 @@ describe("formatOnDisplay: testing input containing valid US number", function()
 
     it("calling setNumber doesnt format the number", function() {
       var anotherNumber = "+14154181234";
-      iti.setNumber(anotherNumber);
+      input.intlTelInput("setNumber", anotherNumber);
       expect(getInputVal()).toEqual(anotherNumber);
     });
 
@@ -36,7 +37,7 @@ describe("formatOnDisplay: testing input containing valid US number", function()
   describe("init plugin with formatOnDisplay=true and nationalMode=true", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         formatOnDisplay: true,
         nationalMode: true
       });
@@ -47,7 +48,7 @@ describe("formatOnDisplay: testing input containing valid US number", function()
     });
 
     it("calling setNumber formats the number to national format", function() {
-      iti.setNumber("+14154181234");
+      input.intlTelInput("setNumber", "+14154181234");
       expect(getInputVal()).toEqual("(415) 418-1234");
     });
 
@@ -56,7 +57,7 @@ describe("formatOnDisplay: testing input containing valid US number", function()
   describe("init plugin with formatOnDisplay=true and nationalMode=false", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         formatOnDisplay: true,
         nationalMode: false
       });
@@ -67,7 +68,7 @@ describe("formatOnDisplay: testing input containing valid US number", function()
     });
 
     it("calling setNumber formats the number to international format", function() {
-      iti.setNumber("+14154181234");
+      input.intlTelInput("setNumber", "+14154181234");
       expect(getInputVal()).toEqual("+1 415-418-1234");
     });
 

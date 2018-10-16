@@ -5,13 +5,14 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
   beforeEach(function() {
     intlSetup();
     input = $("<input>").appendTo("body");
-    iti = window.intlTelInput(input[0], {
+    input.intlTelInput({
       nationalMode: false
     });
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy").remove();
+    input = null;
   });
 
 
@@ -23,22 +24,22 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
     });
 
     it("pressing UP opens the dropdown", function() {
-      triggerKeyOnFlagsContainerElement("ArrowUp");
+      triggerKeyOnFlagsContainerElement("UP");
       expect(getListElement()).toBeVisible();
     });
 
     it("pressing DOWN opens the dropdown", function() {
-      triggerKeyOnFlagsContainerElement("ArrowDown");
+      triggerKeyOnFlagsContainerElement("DOWN");
       expect(getListElement()).toBeVisible();
     });
 
     it("pressing SPACE opens the dropdown", function() {
-      triggerKeyOnFlagsContainerElement(" ");
+      triggerKeyOnFlagsContainerElement("SPACE");
       expect(getListElement()).toBeVisible();
     });
 
     it("pressing ENTER opens the dropdown", function() {
-      triggerKeyOnFlagsContainerElement("Enter");
+      triggerKeyOnFlagsContainerElement("ENTER");
       expect(getListElement()).toBeVisible();
     });
 
@@ -49,30 +50,30 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
   describe("when dropdown is opened", function() {
 
     beforeEach(function() {
-      getSelectedFlagContainer()[0].click();
+      getSelectedFlagContainer().click();
     });
 
     it("pressing esc closes the popup", function() {
-      triggerKeyOnBody("Escape");
+      triggerKeyOnBody("ESC");
       expect(getListElement()).not.toBeVisible();
     });
 
     it("pressing up while on the top item does not change the highlighted item", function() {
-      triggerKeyOnBody("ArrowUp");
+      triggerKeyOnBody("UP");
       var topItem = getListElement().find("li.country:eq(0)");
       expect(topItem).toHaveClass("highlight");
     });
 
     it("pressing z highlights Zambia", function() {
-      triggerKeyOnBody("z");
+      triggerKeyOnBody("Z");
       var zambiaListItem = getListElement().find("li[data-country-code='zm']");
       expect(zambiaListItem).toHaveClass("highlight");
     });
 
     it("pressing z three times also highlights Zambia (no further matches)", function() {
-      triggerKeyOnBody("z");
-      triggerKeyOnBody("z");
-      triggerKeyOnBody("z");
+      triggerKeyOnBody("Z");
+      triggerKeyOnBody("Z");
+      triggerKeyOnBody("Z");
       var zambiaListItem = getListElement().find("li[data-country-code='zm']");
       expect(zambiaListItem).toHaveClass("highlight");
     });
@@ -85,9 +86,9 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
 
       beforeEach(function() {
         lastItem = getListElement().find("li.country:last");
-        triggerKeyOnBody("z");
-        triggerKeyOnBody("i");
-        triggerKeyOnBody("ArrowDown");
+        triggerKeyOnBody("Z");
+        triggerKeyOnBody("I");
+        triggerKeyOnBody("DOWN");
       });
 
       it("highlights the last item, which is Åland Islands", function() {
@@ -96,7 +97,7 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
       });
 
       it("pressing down while on the last item does not change the highlighted item", function() {
-        triggerKeyOnBody("ArrowDown");
+        triggerKeyOnBody("DOWN");
         expect(lastItem).toHaveClass("highlight");
       });
     });
@@ -106,7 +107,7 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
     describe("pressing down", function() {
 
       beforeEach(function() {
-        triggerKeyOnBody("ArrowDown");
+        triggerKeyOnBody("DOWN");
       });
 
       it("changes the highlighted item", function() {
@@ -122,7 +123,7 @@ describe("dropdown shortcuts: init plugin (with nationalMode=false) to test keyb
       describe("pressing enter", function() {
 
         beforeEach(function() {
-          triggerKeyOnBody("Enter");
+          triggerKeyOnBody("ENTER");
         });
 
         it("changes the active item", function() {

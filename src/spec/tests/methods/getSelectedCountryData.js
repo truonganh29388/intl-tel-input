@@ -4,27 +4,28 @@ describe("getSelectedCountryData: init plugin to test public method getSelectedC
 
   beforeEach(function() {
     intlSetup();
-    input = $("<input>").wrap("div");
-    iti = window.intlTelInput(input[0]);
+    input = $("<input>");
+    input.intlTelInput();
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   it("gets the right default country data", function() {
-    expect(iti.getSelectedCountryData().iso2).toEqual("us");
+    expect(input.intlTelInput("getSelectedCountryData").iso2).toEqual("us");
   });
 
   it("change country by number gets the right country data", function() {
     input.val("+44");
     triggerKeyOnInput(" ");
-    expect(iti.getSelectedCountryData().iso2).toEqual("gb");
+    expect(input.intlTelInput("getSelectedCountryData").iso2).toEqual("gb");
   });
 
   it("change country by selecting a flag gets the right country data", function() {
     selectFlag("ch");
-    expect(iti.getSelectedCountryData().iso2).toEqual("ch");
+    expect(input.intlTelInput("getSelectedCountryData").iso2).toEqual("ch");
   });
 
 });

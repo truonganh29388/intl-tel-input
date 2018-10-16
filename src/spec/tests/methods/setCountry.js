@@ -6,13 +6,14 @@ describe("setCountry: init plugin and calling public method setCountry()", funct
 
   beforeEach(function() {
     intlSetup();
-    input = $("<input>").wrap("div");
-    iti = window.intlTelInput(input[0]);
-    iti.setCountry(countryCode);
+    input = $("<input>");
+    input.intlTelInput();
+    input.intlTelInput("setCountry", countryCode);
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   it("updates the selected flag", function() {

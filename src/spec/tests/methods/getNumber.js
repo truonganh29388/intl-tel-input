@@ -7,23 +7,24 @@ describe("getNumber: ", function() {
     beforeEach(function() {
       intlSetup(true);
       input = $("<input value='+17024181234'>");
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     afterEach(function() {
-      intlTeardown();
+      input.intlTelInput("destroy");
+      input = null;
     });
 
     it("calling getNumber with no args returns the number as E.164", function() {
-      expect(iti.getNumber()).toEqual("+17024181234");
+      expect(input.intlTelInput("getNumber")).toEqual("+17024181234");
     });
 
     it("calling getNumber with format=INTERNATIONAL", function() {
-      expect(iti.getNumber(intlTelInputUtils.numberFormat.INTERNATIONAL)).toEqual("+1 702-418-1234");
+      expect(input.intlTelInput("getNumber", intlTelInputUtils.numberFormat.INTERNATIONAL)).toEqual("+1 702-418-1234");
     });
 
     it("calling getNumber with format=NATIONAL", function() {
-      expect(iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL)).toEqual("(702) 418-1234");
+      expect(input.intlTelInput("getNumber", intlTelInputUtils.numberFormat.NATIONAL)).toEqual("(702) 418-1234");
     });
 
   });
@@ -34,12 +35,13 @@ describe("getNumber: ", function() {
 
     beforeEach(function() {
       intlSetup(true);
-      input = $("<input>").wrap("div");
-      iti = window.intlTelInput(input[0]);
+      input = $("<input>");
+      input.intlTelInput();
     });
 
     afterEach(function() {
-      intlTeardown();
+      input.intlTelInput("destroy");
+      input = null;
     });
 
     describe("selecting American Samoa and then typing a national number", function() {
@@ -50,7 +52,7 @@ describe("getNumber: ", function() {
       });
 
       it("getNumber returns the correct number (with full dialcode/area code)", function() {
-        expect(iti.getNumber()).toEqual("+16847331234");
+        expect(input.intlTelInput("getNumber")).toEqual("+16847331234");
       });
 
     });
@@ -63,7 +65,7 @@ describe("getNumber: ", function() {
       });
 
       it("getNumber returns the correct number", function() {
-        expect(iti.getNumber()).toEqual("+12642351234");
+        expect(input.intlTelInput("getNumber")).toEqual("+12642351234");
       });
 
     });

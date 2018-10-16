@@ -4,11 +4,12 @@ describe("preferredCountries option:", function() {
 
   beforeEach(function() {
     intlSetup();
-    input = $("<input>").wrap("div");
+    input = $("<input>");
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
 
@@ -16,8 +17,8 @@ describe("preferredCountries option:", function() {
   describe("init plugin with empty preferredCountries", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
-        preferredCountries: [],
+      input.intlTelInput({
+        preferredCountries: []
       });
     });
 
@@ -41,8 +42,8 @@ describe("preferredCountries option:", function() {
     beforeEach(function() {
       // United Kingdom
       preferredCountries = ['gb'];
-      iti = window.intlTelInput(input[0], {
-        preferredCountries: preferredCountries,
+      input.intlTelInput({
+        preferredCountries: preferredCountries
       });
     });
 

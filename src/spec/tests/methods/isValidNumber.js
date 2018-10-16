@@ -4,11 +4,12 @@ describe("isValidNumber:", function() {
 
   beforeEach(function() {
     intlSetup(true);
-    input = $("<input>").wrap("div");
+    input = $("<input>");
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
 
@@ -16,28 +17,28 @@ describe("isValidNumber:", function() {
   describe("init plugin and call public method isValidNumber", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     it("returns true for: valid intl number", function() {
-      iti.setNumber("+44 7733 123456");
-      expect(iti.isValidNumber()).toBeTruthy();
+      input.intlTelInput("setNumber", "+44 7733 123456");
+      expect(input.intlTelInput("isValidNumber")).toBeTruthy();
     });
 
     it("returns false for: invalid intl number", function() {
-      iti.setNumber("+44 7733 123");
-      expect(iti.isValidNumber()).toBeFalsy();
+      input.intlTelInput("setNumber", "+44 7733 123");
+      expect(input.intlTelInput("isValidNumber")).toBeFalsy();
     });
 
     it("returns null when utils script is not available", function() {
       delete window.intlTelInputUtils;
-      iti.setNumber("+44 7733 123456");
-      expect(iti.isValidNumber()).toBeNull();
+      input.intlTelInput("setNumber", "+44 7733 123456");
+      expect(input.intlTelInput("isValidNumber")).toBeNull();
     });
 
     /*it("returns false for: valid intl number containing alpha chars", function() {
-      iti.setNumber("+44 7733 123 abc");
-      expect(iti.isValidNumber()).toBeFalsy();
+      input.intlTelInput("setNumber", "+44 7733 123 abc");
+      expect(input.intlTelInput("isValidNumber")).toBeFalsy();
     });*/
 
   });
@@ -46,26 +47,26 @@ describe("isValidNumber:", function() {
   describe("init plugin with nationalMode=true and call public method isValidNumber", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         nationalMode: true
       });
     });
 
     it("returns false for: incorrect selected country, valid number", function() {
-      iti.setNumber("07733 123456");
-      expect(iti.isValidNumber()).toBeFalsy();
+      input.intlTelInput("setNumber", "07733 123456");
+      expect(input.intlTelInput("isValidNumber")).toBeFalsy();
     });
 
     it("returns true for: correct selected country, valid number", function() {
-      iti.setCountry("gb");
-      iti.setNumber("07733 123456");
-      expect(iti.isValidNumber()).toBeTruthy();
+      input.intlTelInput("setCountry", "gb");
+      input.intlTelInput("setNumber", "07733 123456");
+      expect(input.intlTelInput("isValidNumber")).toBeTruthy();
     });
 
     it("returns false for: correct selected country, invalid number", function() {
-      iti.setCountry("gb");
-      iti.setNumber("07733 123");
-      expect(iti.isValidNumber()).toBeFalsy();
+      input.intlTelInput("setCountry", "gb");
+      input.intlTelInput("setNumber", "07733 123");
+      expect(input.intlTelInput("isValidNumber")).toBeFalsy();
     });
 
   });

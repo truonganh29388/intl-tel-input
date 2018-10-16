@@ -4,16 +4,17 @@ describe("excludeCountries option:", function() {
 
   beforeEach(function() {
     intlSetup();
-    input = $("<input>").wrap("div");
+    input = $("<input>");
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   it("init the plugin with excludeCountries=[] has all countries", function() {
-    iti = window.intlTelInput(input[0], {
-      excludeCountries: [],
+    input.intlTelInput({
+      excludeCountries: []
     });
     expect(getListLength()).toEqual(totalCountries + defaultPreferredCountries);
   });
@@ -23,9 +24,9 @@ describe("excludeCountries option:", function() {
     var excludeCountries = ["us", "ca"];
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         excludeCountries: excludeCountries,
-        preferredCountries: [],
+        preferredCountries: []
       });
     });
 

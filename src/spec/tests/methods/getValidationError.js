@@ -4,27 +4,28 @@ describe("getValidationError:", function() {
 
   beforeEach(function() {
     intlSetup(true);
-    input = $("<input>").wrap("div");
-    iti = window.intlTelInput(input[0]);
+    input = $("<input>");
+    input.intlTelInput();
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
   it("returns the right error for a number that is too short", function() {
-    iti.setNumber("+4477");
-    expect(iti.getValidationError()).toEqual(intlTelInputUtils.validationError.TOO_SHORT);
+    input.intlTelInput("setNumber", "+4477");
+    expect(input.intlTelInput("getValidationError")).toEqual(intlTelInputUtils.validationError.TOO_SHORT);
   });
 
   it("returns the right error for a number that is too long", function() {
-    iti.setNumber("+447733123456789");
-    expect(iti.getValidationError()).toEqual(intlTelInputUtils.validationError.TOO_LONG);
+    input.intlTelInput("setNumber", "+447733123456789");
+    expect(input.intlTelInput("getValidationError")).toEqual(intlTelInputUtils.validationError.TOO_LONG);
   });
 
   it("returns the right error for a number with an invalid country code", function() {
-    iti.setNumber("+969");
-    expect(iti.getValidationError()).toEqual(intlTelInputUtils.validationError.INVALID_COUNTRY_CODE);
+    input.intlTelInput("setNumber", "+969");
+    expect(input.intlTelInput("getValidationError")).toEqual(intlTelInputUtils.validationError.INVALID_COUNTRY_CODE);
   });
 
 });

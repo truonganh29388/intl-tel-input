@@ -11,13 +11,14 @@ describe("close:countrydropdown event:", function() {
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy").remove();
+    input = null;
   });
 
   describe("init plugin", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0])
+      input.intlTelInput();
     });
 
     it("does not trigger the event", function() {
@@ -26,13 +27,13 @@ describe("close:countrydropdown event:", function() {
 
     it("clicking outside the dropdown to close it triggers the event", function() {
       openCountryDropDown();
-      input[0].click();
+      input.click();
       expect(spy).toHaveBeenTriggered();
     });
 
     it("pressing esc triggers the event", function() {
       openCountryDropDown();
-      triggerKeyOnBody("Escape");
+      triggerKeyOnBody("ESC");
       expect(spy).toHaveBeenTriggered();
     });
 

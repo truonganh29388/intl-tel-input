@@ -7,7 +7,8 @@ describe("initial values:", function() {
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy");
+    input = null;
   });
 
 
@@ -15,8 +16,8 @@ describe("initial values:", function() {
   describe("init vanilla plugin on empty input", function() {
 
     beforeEach(function() {
-      input = $("<input>").wrap("div");
-      iti = window.intlTelInput(input[0]);
+      input = $("<input>");
+      input.intlTelInput();
     });
 
     it("creates a container with the right class", function() {
@@ -43,7 +44,7 @@ describe("initial values:", function() {
 
     beforeEach(function() {
       input = $("<input value='+44 12345'>");
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     it("sets the state correctly: selected flag and active list item", function() {
@@ -64,7 +65,7 @@ describe("initial values:", function() {
     describe("init plugin with nationalMode enabled", function() {
 
       beforeEach(function() {
-        iti = window.intlTelInput(input[0]);
+        input.intlTelInput();
       });
 
       it("defaults to US flag", function() {
@@ -78,13 +79,28 @@ describe("initial values:", function() {
       var initialCountry = "ca";
 
       beforeEach(function() {
-        iti = window.intlTelInput(input[0], {
+        input.intlTelInput({
           initialCountry: initialCountry
         });
       });
 
       it("defaults to the initialCountry flag", function() {
         expect(getSelectedFlagElement()).toHaveClass(initialCountry);
+      });
+
+    });
+
+    describe("init plugin with nationalMode disabled", function() {
+
+      beforeEach(function() {
+        input.intlTelInput({
+          nationalMode: false
+        });
+      });
+
+      it("does not set the selected flag or the active list item", function() {
+        expect(getSelectedFlagElement().attr("class")).toBe("iti-flag");
+        expect(getActiveListItem().length).toEqual(0);
       });
 
     });
@@ -97,7 +113,7 @@ describe("initial values:", function() {
 
     beforeEach(function() {
       input = $("<input value='+682 21 234'>");
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     // issue 520
@@ -113,7 +129,7 @@ describe("initial values:", function() {
 
     beforeEach(function() {
       input = $("<input value='+969999'>");
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     it("does not set the selected flag or the active list item", function() {
@@ -129,7 +145,7 @@ describe("initial values:", function() {
 
     beforeEach(function() {
       input = $("<input value='8'>");
-      iti = window.intlTelInput(input[0]);
+      input.intlTelInput();
     });
 
     it("does not set the selected flag or the active list item", function() {

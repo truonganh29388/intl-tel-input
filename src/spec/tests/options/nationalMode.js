@@ -8,7 +8,8 @@ describe("nationalMode:", function() {
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy").remove();
+    input = null;
   });
 
 
@@ -18,8 +19,8 @@ describe("nationalMode:", function() {
     beforeEach(function() {
       // must be in DOM for focus to work
       input = $("<input>").appendTo("body");
-      iti = window.intlTelInput(input[0], {
-        nationalMode: true,
+      input.intlTelInput({
+        nationalMode: true
       });
     });
 
@@ -28,7 +29,7 @@ describe("nationalMode:", function() {
     });
 
     it("focusing the input does not insert the dial code", function() {
-      triggerInputEvent("focus");
+      input.focus();
       expect(getInputVal()).toEqual("");
     });
 
@@ -54,10 +55,10 @@ describe("nationalMode:", function() {
 
     beforeEach(function() {
       input = $("<input value='" + nationalNum + "'>");
-      iti = window.intlTelInput(input[0], {
-        nationalMode: true,
+      input.intlTelInput({
+        nationalMode: true
       });
-      iti.setCountry("us");
+      input.intlTelInput("setCountry", "us");
     });
 
     it("displays the number and has US flag selected", function() {
@@ -81,8 +82,8 @@ describe("nationalMode:", function() {
 
     beforeEach(function() {
       input = $("<input value='" + intlNumber + "'>");
-      iti = window.intlTelInput(input[0], {
-        nationalMode: true,
+      input.intlTelInput({
+        nationalMode: true
       });
     });
 

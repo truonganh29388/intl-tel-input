@@ -4,23 +4,24 @@ describe("setPlaceholderNumberType: init vanilla plugin and call setPlaceholderN
 
   beforeEach(function() {
     intlSetup(true);
-    input = $("<input>").wrap("div");
-    iti = window.intlTelInput(input[0], {
+    input = $("<input>");
+    input.intlTelInput({
       initialCountry: "gb"
     });
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy'");
+    input = null;
   });
 
   it("sets the placeholder to fixed line", function() {
-    iti.setPlaceholderNumberType("FIXED_LINE");
+    input.intlTelInput("setPlaceholderNumberType", "FIXED_LINE");
     expect(input.attr("placeholder")).toEqual("0121 234 5678");
   });
 
   it("sets the placeholder to mobile", function() {
-    iti.setPlaceholderNumberType("MOBILE");
+    input.intlTelInput("setPlaceholderNumberType", "MOBILE");
     expect(input.attr("placeholder")).toEqual("07400 123456");
   });
 

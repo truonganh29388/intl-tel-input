@@ -8,13 +8,14 @@ describe("allowDropdown:", function() {
   });
 
   afterEach(function() {
-    intlTeardown();
+    input.intlTelInput("destroy").remove();
+    input = null;
   });
 
   describe("init plugin with allowDropdown=false", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         allowDropdown: false
       });
     });
@@ -35,7 +36,7 @@ describe("allowDropdown:", function() {
   describe("init plugin with allowDropdown=false and separateDialCode=true", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         allowDropdown: false,
         separateDialCode: true
       });
@@ -55,7 +56,7 @@ describe("allowDropdown:", function() {
   describe("init plugin with allowDropdown=true", function() {
 
     beforeEach(function() {
-      iti = window.intlTelInput(input[0], {
+      input.intlTelInput({
         allowDropdown: true
       });
     });
